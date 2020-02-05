@@ -123,6 +123,9 @@ class Gem::PackageTask < Rake::PackageTask
         end
       end
     end
+  rescue => e
+    p(here: "rescue in define", exception: e)
+    puts e.backtrace
   end
 
 end
