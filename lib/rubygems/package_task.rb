@@ -113,6 +113,7 @@ class Gem::PackageTask < Rake::PackageTask
     Gem.configuration.verbose = trace
 
     file gem_path => [package_dir, gem_dir] + @gem_spec.files do
+      begin
       chdir(gem_dir) do
         when_writing "Creating #{gem_spec.file_name}" do
           Gem::Package.build gem_spec
@@ -122,10 +123,10 @@ class Gem::PackageTask < Rake::PackageTask
           end
         end
       end
-    end
-  rescue => e
-    p(here: "rescue in define", exception: e)
-    puts e.backtrace
+      rescue => e
+        p(here: "rescue in define", exception: e)
+        puts e.backtrace
+      end
   end
 
 end
